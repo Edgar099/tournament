@@ -5,12 +5,10 @@ import com.example.tournament.repo.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class TeamService {
-    @Autowired
     private final TeamRepository teamRepository;
     TeamService(TeamRepository teamRepository){
         this.teamRepository = teamRepository;
@@ -30,9 +28,8 @@ public class TeamService {
         teamRepository.delete(getTeam(id));
     }
     public Team  updateTeam(Team team){
-
-        if(teamRepository.existsById(team.getId_team())){
-            Team team1 = getTeam(team.getId_team());
+        if(teamRepository.existsById(team.getIdTeam())){
+            Team team1 = getTeam(team.getIdTeam());
             teamRepository.save(team);
             return team1;
         }
@@ -41,4 +38,5 @@ public class TeamService {
     public List<Team> listTeam(){
         return teamRepository.findAll();
     }
+
 }

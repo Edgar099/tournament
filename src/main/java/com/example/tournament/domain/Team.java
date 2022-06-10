@@ -6,14 +6,16 @@ import javax.persistence.*;
 @Table(name = "team")
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_team;
-    private String team_name;
+    @Column
+    private Integer idTeam;
+    @Column
+    private String teamName;
+    @Column
     private String city;
 
-    public Team(Integer id_team, String team_name, String city) {
-        this.id_team = id_team;
-        this.team_name = team_name;
+    public Team(Integer idTeam, String teamName, String city) {
+        this.idTeam = idTeam;
+        this.teamName = teamName;
         this.city = city;
     }
 
@@ -21,20 +23,20 @@ public class Team {
 
     }
 
-    public Integer getId_team() {
-        return id_team;
+    public Integer getIdTeam() {
+        return idTeam;
     }
 
-    public void setId_team(Integer id_team) {
-        this.id_team = id_team;
+    public void setIdTeam(Integer idTeam) {
+        this.idTeam = idTeam;
     }
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public String getCity() {
@@ -48,8 +50,8 @@ public class Team {
     @Override
     public String toString() {
         return "Team{" +
-                "id_team=" + id_team +
-                ", team_name='" + team_name + '\'' +
+                "id_team=" + idTeam +
+                ", team_name='" + teamName + '\'' +
                 ", city='" + city + '\'' +
                 '}';
     }

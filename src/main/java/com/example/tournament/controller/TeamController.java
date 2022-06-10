@@ -1,18 +1,13 @@
 package com.example.tournament.controller;
-
 import com.example.tournament.domain.Team;
 import com.example.tournament.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class TeamController {
-    @Autowired
     private TeamService service;
 
     public TeamController(TeamService service) {
@@ -26,12 +21,31 @@ public class TeamController {
     public void setService(TeamService service) {
         this.service = service;
     }
-    @GetMapping("/teams/{id}")
-    public ResponseEntity<Team> findTeam(@PathVariable Integer id){
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Team> findTeam(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getTeam(id));
     }
+
     @GetMapping("/teams")
-    public ResponseEntity<List<Team>> findAllTeams(){
+    public ResponseEntity<List<Team>> findAllTeams() {
         return ResponseEntity.ok(service.listTeam());
+    }
+
+    @PostMapping("/save/{id}")
+    public ResponseEntity<Team> save(@RequestBody  Team team, @PathVariable Integer id) {
+        team.setIdTeam(id);
+        return ResponseEntity.ok(service.saveTeam(team));
+    }
+    @DeleteMapping( "/delete/{id}")
+    public ResponseEntity<Team> delete(@PathVariable Integer id) {
+        service.deleteTeam(id);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Team> update(@PathVariable Integer id, @RequestBody  Team team){
+        team.setIdTeam(id);
+        return ResponseEntity.ok(service.updateTeam(team));
     }
 }
