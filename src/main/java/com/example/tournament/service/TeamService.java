@@ -2,7 +2,6 @@ package com.example.tournament.service;
 
 import com.example.tournament.domain.Team;
 import com.example.tournament.repo.TeamRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +24,25 @@ public class TeamService {
         return teamRepository.save(team);
     }
     public void  deleteTeam(Integer id){
-        teamRepository.delete(getTeam(id));
+        try{
+            if(teamRepository.existsById(id)){
+                teamRepository.delete(getTeam(id));
+            }
+        }
+        catch (RuntimeException ignored){
+        }
+
+
     }
     public Team  updateTeam(Team team){
-        if(teamRepository.existsById(team.getIdTeam())){
-            Team team1 = getTeam(team.getIdTeam());
-            teamRepository.save(team);
-            return team1;
+        try {
+            if (teamRepository.existsById(team.getIdTeam())) {
+                Team team1 = getTeam(team.getIdTeam());
+                teamRepository.save(team);
+                return team1;
+            }
+        }
+        catch (RuntimeException ignored){
         }
         return null;
     }

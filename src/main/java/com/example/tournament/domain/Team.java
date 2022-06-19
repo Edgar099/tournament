@@ -26,23 +26,18 @@ public class Team {
     public Integer getIdTeam() {
         return idTeam;
     }
-
     public void setIdTeam(Integer idTeam) {
         this.idTeam = idTeam;
     }
-
     public String getTeamName() {
         return teamName;
     }
-
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
-
     public String getCity() {
         return city;
     }
-
     public void setCity(String city) {
         this.city = city;
     }
