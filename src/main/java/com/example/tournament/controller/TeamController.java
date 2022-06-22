@@ -34,7 +34,6 @@ public class TeamController {
 
     @PostMapping("/teams")
     public ResponseEntity<Team> save(@RequestBody  Team team) {
-
         return ResponseEntity.ok(service.saveTeam(team));
     }
     @DeleteMapping( "/teams/{id}")
