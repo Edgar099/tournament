@@ -22,23 +22,23 @@ public class CoachController {
         this.coachService = coachService;
     }
     @GetMapping("/coach/{id}")
-    public ResponseEntity<Coach> find(@PathVariable Integer id){
+    public ResponseEntity<Coach> findCoach(@PathVariable Integer id){
         return ResponseEntity.ok(coachService.getCoach(id));
     }
-    @GetMapping("/coach")
+    @GetMapping("/coaches")
     public ResponseEntity<List<Coach>> findAllCoaches(){
         return ResponseEntity.ok(coachService.listCoach());
     }
     @PostMapping("/coach")
-    public ResponseEntity<Coach> save(@RequestBody Coach coach){
+    public ResponseEntity<Coach> saveCoach(@RequestBody Coach coach){
         return ResponseEntity.ok(coachService.saveCoach(coach));
     }
     @DeleteMapping("/coach/{id}")
-    public void delete (@PathVariable Integer id){
+    public void deleteCoach (@PathVariable Integer id){
         coachService.deleteCoach(id);
     }
     @PutMapping("/coach")
-    public ResponseEntity<Coach> update (@RequestBody Coach coach){
+    public ResponseEntity<Coach> updateCoach (@RequestBody Coach coach){
         return  ResponseEntity.ok(coachService.updateCoach(coach));
     }
 

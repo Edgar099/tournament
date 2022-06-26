@@ -1,5 +1,7 @@
 package com.example.tournament.domain;
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "team")
 public class Team {
@@ -17,9 +19,14 @@ public class Team {
         this.teamName = teamName;
         this.city = city;
     }
-    @OneToOne(mappedBy = "team")
-    private Coach coach;
-
+//    @OneToOne(mappedBy = "team")
+//    private Coach coach;
+//    @OneToOne(mappedBy = "homeTeamId")
+//    private Game homeTeam;
+//    @OneToOne(mappedBy = "visitorTeamId")
+//    private Game visitTeam;
+//    @OneToMany(mappedBy = "teamId", fetch = FetchType.LAZY)
+//    private List<Player> listPlayers;
     public Team() {
 
     }

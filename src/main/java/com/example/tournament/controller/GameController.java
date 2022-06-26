@@ -6,6 +6,8 @@ import com.example.tournament.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class GameController {
     GameService gameServ;
@@ -23,6 +25,10 @@ public class GameController {
     public ResponseEntity<Game> find(@PathVariable Integer id){
         return ResponseEntity.ok(gameServ.getGame(id));
     }
+    @GetMapping("/games")
+    public ResponseEntity<List<Game>> findAllGames(){
+        return ResponseEntity.ok(gameServ.listGame());
+    }
     @PostMapping("/game")
     public ResponseEntity<Game> save (Game game){
         return ResponseEntity.ok(gameServ.saveGame(game));
@@ -35,4 +41,5 @@ public class GameController {
     public ResponseEntity<Game> update(@RequestBody Game game){
         return ResponseEntity.ok(gameServ.update(game));
     }
+
  }

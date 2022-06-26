@@ -38,14 +38,12 @@ public class TeamController {
     }
     @DeleteMapping( "/teams/{id}")
     public ResponseEntity<Team> delete(@PathVariable Integer id) {
-
         service.deleteTeam(id);
         return ResponseEntity.ok().body(null);
     }
 
     @PutMapping("/teams")
     public ResponseEntity<Team> update( @RequestBody  Team team){
-
         return ResponseEntity.ok(service.updateTeam(team));
     }
 }

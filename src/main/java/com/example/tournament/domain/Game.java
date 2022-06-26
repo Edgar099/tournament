@@ -15,12 +15,14 @@ public class Game {
 
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_team_id")
+
     private Team homeTeamId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "visitor_team_id")
+
     private Team visitorTeamId;
 
     @Column(name = "points_home_team")
@@ -74,5 +76,17 @@ public class Game {
     }
     public void setPointsV(Integer pointsV) {
         this.pointsV = pointsV;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", tourNum=" + tourNum +
+                ", homeTeamId=" + homeTeamId +
+                ", visitorTeamId=" + visitorTeamId +
+                ", pointsH=" + pointsH +
+                ", pointsV=" + pointsV +
+                '}';
     }
 }
