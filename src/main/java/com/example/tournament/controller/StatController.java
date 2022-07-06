@@ -1,6 +1,8 @@
 package com.example.tournament.controller;
 
 import com.example.tournament.domain.Stat;
+import com.example.tournament.dto.RequestStat;
+import com.example.tournament.dto.ResponseStat;
 import com.example.tournament.service.StatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,30 +11,31 @@ import java.util.List;
 
 @RestController
 public class StatController {
-    StatService statService;
+    StatService service;
     public StatController(StatService statService) {
-        this.statService = statService;
+        this.service = statService;
     }
-    public StatService getStatService() { return statService; }
-    public void setStatService(StatService statService) { this.statService = statService;  }
+    public StatService getStatService() { return service; }
+    public void setStatService(StatService statService) { this.service = statService;  }
     @GetMapping("/stat/{id}")
-    public ResponseEntity<Stat> getStat(@PathVariable Integer id){
-        return ResponseEntity.ok(statService.getStat(id));
+    public ResponseStat getStat(@PathVariable Integer id){
+        return service.getStat(id);
     }
-    @GetMapping("/stats")
-    public ResponseEntity<List<Stat>> getListStats(){
-        return ResponseEntity.ok(statService.getListStat());
+    @GetMapping("/stat/list")
+    public List<ResponseStat> getListStats(){
+        return service.listStat();
     }
     @PostMapping("/stat")
-    public ResponseEntity<Stat> save(Stat s){
-        return ResponseEntity.ok(statService.saveStat(s));
+    public Stat save(@RequestBody RequestStat reqStat){
+        return service.saveStat(reqStat);
     }
     @DeleteMapping("/stat/{id}")
-    public void delete(@PathVariable Integer id){
-        statService.deleteStat(id);
+    public String delete(@PathVariable Integer id){
+        service.deleteStat(id);
+        return "Deleted";
     }
     @PutMapping("/stat")
-    public ResponseEntity<Stat> update(Stat s){
-        return ResponseEntity.ok(statService.updateStat(s));
+    public Stat update(@RequestBody RequestStat reqStat){
+        return service.updateStat(reqStat);
     }
 }

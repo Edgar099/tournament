@@ -1,7 +1,8 @@
 package com.example.tournament.domain;
-import javax.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "team")
 public class Team {
@@ -13,20 +14,22 @@ public class Team {
     private String teamName;
     @Column(name = "city")
     private String city;
+    @OneToOne
+    @JoinColumn(name = "coach_id")
+    private Coach coachId;
 
-    public Team(Integer teamId, String teamName, String city) {
+    public Team(Integer teamId, String teamName, String city, Coach coachId) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.city = city;
+        this.coachId = coachId;
     }
-//    @OneToOne(mappedBy = "team")
-//    private Coach coach;
-//    @OneToOne(mappedBy = "homeTeamId")
-//    private Game homeTeam;
-//    @OneToOne(mappedBy = "visitorTeamId")
-//    private Game visitTeam;
-//    @OneToMany(mappedBy = "teamId", fetch = FetchType.LAZY)
-//    private List<Player> listPlayers;
+
+    public Team(String teamName, String city, Coach coachId) {
+        this.teamName = teamName;
+        this.city = city;
+        this.coachId = coachId;
+    }
     public Team() {
 
     }
@@ -49,13 +52,20 @@ public class Team {
     public void setCity(String city) {
         this.city = city;
     }
+    public Coach getCoachId() {
+        return coachId;
+    }
+    public void setCoachId(Coach coachId) {
+        this.coachId = coachId;
+    }
 
     @Override
     public String toString() {
         return "Team{" +
-                "id_team=" + teamId +
-                ", team_name='" + teamName + '\'' +
+                "teamId=" + teamId +
+                ", teamName='" + teamName + '\'' +
                 ", city='" + city + '\'' +
+                ", coachId=" + coachId +
                 '}';
     }
 }

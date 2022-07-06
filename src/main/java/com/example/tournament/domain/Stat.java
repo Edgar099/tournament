@@ -1,7 +1,9 @@
 package com.example.tournament.domain;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table
 public class Stat {
@@ -12,7 +14,7 @@ public class Stat {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player playerId;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id")
     private Game gameId;
 
@@ -37,8 +39,7 @@ public class Stat {
     @Column(name = "blocks")
     private Integer blocks;
 
-    public Stat(Integer statId, Game gameId, Player playerId, Integer minutesOnCourt, Integer allFreeThrows, Integer exactFreeThrows, Integer all2Throws, Integer exact2Throws, Integer all3Throws, Integer exact3Throws, Integer assists, Integer steals, Integer blocks) {
-        this.statId = statId;
+    public Stat(Game gameId, Player playerId, Integer minutesOnCourt, Integer allFreeThrows, Integer exactFreeThrows, Integer all2Throws, Integer exact2Throws, Integer all3Throws, Integer exact3Throws, Integer assists, Integer steals, Integer blocks) {
         this.gameId = gameId;
         this.playerId = playerId;
         this.minutesOnCourt = minutesOnCourt;
@@ -52,6 +53,23 @@ public class Stat {
         this.steals = steals;
         this.blocks = blocks;
     }
+
+    public Stat(Integer statId, Player playerId, Game gameId, Integer minutesOnCourt, Integer allFreeThrows, Integer exactFreeThrows, Integer all2Throws, Integer exact2Throws, Integer all3Throws, Integer exact3Throws, Integer assists, Integer steals, Integer blocks) {
+        this.statId = statId;
+        this.playerId = playerId;
+        this.gameId = gameId;
+        this.minutesOnCourt = minutesOnCourt;
+        this.allFreeThrows = allFreeThrows;
+        this.exactFreeThrows = exactFreeThrows;
+        this.all2Throws = all2Throws;
+        this.exact2Throws = exact2Throws;
+        this.all3Throws = all3Throws;
+        this.exact3Throws = exact3Throws;
+        this.assists = assists;
+        this.steals = steals;
+        this.blocks = blocks;
+    }
+
     public Stat() {
     }
 

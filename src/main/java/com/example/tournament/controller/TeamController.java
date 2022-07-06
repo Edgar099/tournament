@@ -1,7 +1,8 @@
 package com.example.tournament.controller;
 import com.example.tournament.domain.Team;
+import com.example.tournament.dto.RequestTeam;
+import com.example.tournament.dto.ResponseTeam;
 import com.example.tournament.service.TeamService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,28 +23,28 @@ public class TeamController {
         this.service = service;
     }
 
-    @GetMapping("/teams/{id}")
-    public ResponseEntity<Team> findTeam(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getTeam(id));
+    @GetMapping("/team/{id}")
+    public ResponseTeam findTeam(@PathVariable Integer id) {
+        return service.getTeam(id);
     }
 
-    @GetMapping("/teams")
-    public ResponseEntity<List<Team>> findAllTeams() {
-        return ResponseEntity.ok(service.listTeam());
+    @GetMapping("/team/list")
+    public List<ResponseTeam> findAllTeams() {
+        return service.listTeam();
     }
 
-    @PostMapping("/teams")
-    public ResponseEntity<Team> save(@RequestBody  Team team) {
-        return ResponseEntity.ok(service.saveTeam(team));
+    @PostMapping("/team")
+    public Team saveTeam(@RequestBody RequestTeam reqTeam){
+        return service.saveTeam(reqTeam);
     }
-    @DeleteMapping( "/teams/{id}")
-    public ResponseEntity<Team> delete(@PathVariable Integer id) {
+    @DeleteMapping( "/team/{id}")
+    public String delete(@PathVariable Integer id) {
         service.deleteTeam(id);
-        return ResponseEntity.ok().body(null);
+        return "This Team deleted";
     }
 
-    @PutMapping("/teams")
-    public ResponseEntity<Team> update( @RequestBody  Team team){
-        return ResponseEntity.ok(service.updateTeam(team));
+    @PutMapping("/team")
+    public Team update(@RequestBody  RequestTeam  reqTeam){
+        return service.updateTeam(reqTeam);
     }
 }

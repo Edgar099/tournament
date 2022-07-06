@@ -1,45 +1,39 @@
 package com.example.tournament.controller;
 
 import com.example.tournament.domain.Coach;
+import com.example.tournament.dto.RequestCoach;
+import com.example.tournament.dto.ResponseCoach;
 import com.example.tournament.service.CoachService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 public class CoachController {
-    private CoachService coachService;
+    private final CoachService service;
 
     public CoachController(CoachService coachService) {
-        this.coachService = coachService;
-
-    }
-    public CoachService getCoachService() {
-        return coachService;
-    }
-    public void setCoachService(CoachService coachService) {
-        this.coachService = coachService;
+        this.service = coachService;
     }
     @GetMapping("/coach/{id}")
-    public ResponseEntity<Coach> findCoach(@PathVariable Integer id){
-        return ResponseEntity.ok(coachService.getCoach(id));
+    public ResponseCoach getCoach(@PathVariable Integer id){
+        return service.getCoach(id);
     }
-    @GetMapping("/coaches")
-    public ResponseEntity<List<Coach>> findAllCoaches(){
-        return ResponseEntity.ok(coachService.listCoach());
+    @GetMapping("/coach/list")
+    public List<ResponseCoach> getListCoaches(){
+        return service.listCoach();
     }
     @PostMapping("/coach")
-    public ResponseEntity<Coach> saveCoach(@RequestBody Coach coach){
-        return ResponseEntity.ok(coachService.saveCoach(coach));
+    public Coach saveCoach(@RequestBody RequestCoach coach){
+        return service.saveCoach(coach);
     }
     @DeleteMapping("/coach/{id}")
-    public void deleteCoach (@PathVariable Integer id){
-        coachService.deleteCoach(id);
+    public String deleteCoach(@PathVariable Integer id){
+        service.deleteCoach(id);
+        return "Deleted";
     }
     @PutMapping("/coach")
-    public ResponseEntity<Coach> updateCoach (@RequestBody Coach coach){
-        return  ResponseEntity.ok(coachService.updateCoach(coach));
+    public Coach updateCoach(@RequestBody RequestCoach coach){
+        return service.updateCoach(coach);
     }
 
 

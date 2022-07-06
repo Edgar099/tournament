@@ -15,16 +15,17 @@ public class Coach {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id")
-    private Team team;
 
     public Coach() {
     }
 
-    public Coach(Integer id, Team team, String firstName, String lastName) {
+    public Coach(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Coach(Integer id, String firstName, String lastName) {
         this.id = id;
-        this.team = team;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -37,13 +38,6 @@ public class Coach {
         this.id = id;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -65,7 +59,6 @@ public class Coach {
     public String toString() {
         return "Coach{" +
                 "id=" + id +
-                ", team=" + team +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

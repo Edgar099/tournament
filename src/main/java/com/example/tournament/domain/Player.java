@@ -1,8 +1,8 @@
 package com.example.tournament.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Date;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "player")
 public class Player {
@@ -10,35 +10,44 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
     private Integer playerId;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team teamId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastname;
-    @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    @Column(name = "age")
+    private Integer age;
     @Column(name = "height")
     private Integer height;
     @Column(name = "weight")
     private Integer weight;
     @Column(name = "position_on_court")
     private Integer positionOnCourt;
-    @Column(name = "num_of_games")
-    private Integer numOfGames;
 
-    public Player(Integer playerId, Team teamId, String firstName, String lastname, Date dateOfBirth, Integer height, Integer weight, Integer positionOnCourt, Integer numOfGames) {
+
+    public Player(Team teamId, String firstName, String lastname,  Integer height, Integer weight, Integer age, Integer positionOnCourt) {
+        this.teamId = teamId;
+        this.firstName = firstName;
+        this.lastname = lastname;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+        this.positionOnCourt = positionOnCourt;
+    }
+
+    public Player(Integer playerId, Team teamId, String firstName, String lastname,  Integer height, Integer weight,Integer age, Integer positionOnCourt) {
         this.playerId = playerId;
         this.teamId = teamId;
         this.firstName = firstName;
         this.lastname = lastname;
-        this.dateOfBirth = dateOfBirth;
+        this.age = age;
         this.height = height;
         this.weight = weight;
         this.positionOnCourt = positionOnCourt;
-        this.numOfGames = numOfGames;
     }
+
     public Player() {
 
     }
@@ -71,11 +80,12 @@ public class Player {
         this.lastname = lastname;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public Integer getAge() {
+        return age;
     }
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public Integer getHeight() {
@@ -99,12 +109,6 @@ public class Player {
         this.positionOnCourt = positionOnCourt;
     }
 
-    public Integer getNumOfGames() {
-        return numOfGames;
-    }
-    public void setNumOfGames(Integer numOfGames) {
-        this.numOfGames = numOfGames;
-    }
     @Override
     public String toString() {
         return "Player{" +
@@ -112,11 +116,10 @@ public class Player {
                 ", teamId=" + teamId +
                 ", firstName='" + firstName + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
+                ", age=" + age +
                 ", height=" + height +
                 ", weight=" + weight +
                 ", positionOnCourt=" + positionOnCourt +
-                ", numOfGames=" + numOfGames +
                 '}';
     }
 }

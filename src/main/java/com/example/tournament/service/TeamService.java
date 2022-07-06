@@ -1,53 +1,57 @@
 package com.example.tournament.service;
-
 import com.example.tournament.domain.Team;
+import com.example.tournament.dto.Mapper;
+import com.example.tournament.dto.RequestTeam;
+import com.example.tournament.dto.ResponseTeam;
 import com.example.tournament.repo.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TeamService {
-    private final TeamRepository teamRepository;
-    TeamService(TeamRepository teamRepository){
-        this.teamRepository = teamRepository;
+    private final TeamRepository teamRepo;
+    private final Mapper mapper;
+
+    public TeamService(TeamRepository teamRepo, Mapper mapper) {
+        this.teamRepo = teamRepo;
+        this.mapper = mapper;
     }
 
-    public TeamRepository getTeamRepository() {
-        return teamRepository;
+    public TeamRepository getTeamRepo() {
+        return teamRepo;
     }
 
-    public Team getTeam(Integer id){
-        return teamRepository.findById(id).get();
+    public ResponseTeam getTeam(Integer id){
+        Team team = teamRepo.findById(id).get();
+        return mapper.toDto(team);
     }
-    public Team saveTeam(Team team){
-        return teamRepository.save(team);
+    public Team saveTeam(RequestTeam reqTeam){
+        Team team = mapper.toTeam(reqTeam);
+        return teamRepo.save(team);
     }
     public void  deleteTeam(Integer id){
-        try{
-            if(teamRepository.existsById(id)){
-                teamRepository.delete(getTeam(id));
-            }
-        }
-        catch (RuntimeException ignored){
-        }
-
-
+        teamRepo.deleteById(id);
     }
-    public Team  updateTeam(Team team){
-        try {
-            if (teamRepository.existsById(team.getIdTeam())) {
-                Team team1 = getTeam(team.getIdTeam());
-                teamRepository.save(team);
-                return team1;
-            }
-        }
-        catch (RuntimeException ignored){
+    public Team updateTeam(RequestTeam reqTeam){
+        if(teamRepo.existsById(Integer.parseInt(reqTeam.getTeamId()))){
+            Team team1 = teamRepo.findById(Integer.parseInt(reqTeam.getTeamId())).get();
+            Team team = mapper.toTeam(reqTeam);
+            teamRepo.save(team);
+            return team1;
+
+
         }
         return null;
     }
-    public List<Team> listTeam(){
-        return teamRepository.findAll();
+    public List<ResponseTeam> listTeam(){
+        List<Team> listT =  teamRepo.findAll();
+        List <ResponseTeam> listR = new ArrayList<>();
+        for (Team team : listT) {
+            listR.add(mapper.toDto(team));
+        }
+        return  listR;
     }
 
 }

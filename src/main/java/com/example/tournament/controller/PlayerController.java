@@ -1,44 +1,45 @@
 package com.example.tournament.controller;
 
 import com.example.tournament.domain.Player;
+import com.example.tournament.dto.RequestPlayer;
+import com.example.tournament.dto.ResponsePlayer;
 import com.example.tournament.service.PlayerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 public class PlayerController {
-    PlayerService playerServ;
+    PlayerService service;
     public PlayerController(PlayerService playerServ) {
-        this.playerServ = playerServ;
+        this.service = playerServ;
     }
-    public PlayerService getPlayerServ() {
-        return playerServ;
+    public PlayerService getService() {
+        return service;
     }
-    public void setPlayerServ(PlayerService playerServ) {
-        this.playerServ = playerServ;
+    public void setService(PlayerService playerServ) {
+        this.service = playerServ;
     }
 
     @GetMapping("/player/{id}")
-    public ResponseEntity<Player> getPlayer(@PathVariable Integer id){
-        return ResponseEntity.ok(playerServ.getPlayer(id));
+    public ResponsePlayer getPlayer(@PathVariable Integer id){
+        return service.getPlayer(id);
     }
-    @GetMapping("/players")
-    public ResponseEntity<List<Player>> getListPlayers(){
-        return ResponseEntity.ok(playerServ.getListPlayers());
+    @GetMapping("/player/list")
+    public List<ResponsePlayer> getListPlayers(){
+        return service.listPlayer();
     }
     @PostMapping("/player")
-    public ResponseEntity<Player> savePlayer(Player p){
-        return ResponseEntity.ok(playerServ.savePlayer(p));
+    public Player savePlayer(@RequestBody RequestPlayer reqPlayer){
+        return service.savePlayer(reqPlayer);
     }
     @DeleteMapping("/player/{id}")
-    public void deletePlayer(@PathVariable Integer id){
-        playerServ.deletePlayer(id);
+    public String deletePlayer(@PathVariable Integer id){
+        service.deletePlayer(id);
+        return "Deleted";
     }
     @PutMapping("/player")
-    public ResponseEntity<Player> updatePlayer(@RequestBody Player p){
-        return ResponseEntity.ok(playerServ.updatePlayer(p));
+    public Player updatePlayer(@RequestBody RequestPlayer reqPlayer){
+        return service.updatePlayer(reqPlayer);
     }
 
 }

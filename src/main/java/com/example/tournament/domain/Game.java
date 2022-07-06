@@ -1,7 +1,8 @@
 package com.example.tournament.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "game")
 public class Game {
@@ -9,28 +10,26 @@ public class Game {
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gameId;
-
     @Column(name = "tour_num")
     private Integer tourNum;
-
-
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "home_team_id")
-
     private Team homeTeamId;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "visitor_team_id")
-
+    @OneToOne
+    @JoinColumn(name = "visit_team_id")
     private Team visitorTeamId;
-
     @Column(name = "points_home_team")
     private Integer pointsH;
-
     @Column(name = "points_visit_team")
     private Integer pointsV;
 
+    public Game(Integer tourNum, Team homeTeamId, Team visitorTeamId, Integer pointsH, Integer pointsV) {
+        this.tourNum = tourNum;
+        this.homeTeamId = homeTeamId;
+        this.visitorTeamId = visitorTeamId;
+        this.pointsH = pointsH;
+        this.pointsV = pointsV;
+    }
     public Game(Integer gameId, Integer tourNum, Team homeTeamId, Team visitorTeamId, Integer pointsH, Integer pointsV) {
         this.gameId = gameId;
         this.tourNum = tourNum;
