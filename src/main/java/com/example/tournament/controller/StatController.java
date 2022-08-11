@@ -4,7 +4,6 @@ import com.example.tournament.domain.Stat;
 import com.example.tournament.dto.RequestStat;
 import com.example.tournament.dto.ResponseStat;
 import com.example.tournament.service.StatService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class StatController {
     public StatService getStatService() { return service; }
     public void setStatService(StatService statService) { this.service = statService;  }
     @GetMapping("/stat/{id}")
-    public ResponseStat getStat(@PathVariable Integer id){
+    public Object getStat(@PathVariable Integer id){
         return service.getStat(id);
     }
     @GetMapping("/stat/list")
@@ -31,11 +30,10 @@ public class StatController {
     }
     @DeleteMapping("/stat/{id}")
     public String delete(@PathVariable Integer id){
-        service.deleteStat(id);
-        return "Deleted";
+        return service.deleteStat(id);
     }
     @PutMapping("/stat")
-    public Stat update(@RequestBody RequestStat reqStat){
+    public Object update(@RequestBody RequestStat reqStat){
         return service.updateStat(reqStat);
     }
 }

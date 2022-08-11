@@ -6,7 +6,7 @@ import com.example.tournament.dto.ResponseCoach;
 import com.example.tournament.service.CoachService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
+@ControllerAdvice
 @RestController
 public class CoachController {
     private final CoachService service;
@@ -15,7 +15,7 @@ public class CoachController {
         this.service = coachService;
     }
     @GetMapping("/coach/{id}")
-    public ResponseCoach getCoach(@PathVariable Integer id){
+    public Object getCoach(@PathVariable Integer id){
         return service.getCoach(id);
     }
     @GetMapping("/coach/list")
@@ -28,11 +28,10 @@ public class CoachController {
     }
     @DeleteMapping("/coach/{id}")
     public String deleteCoach(@PathVariable Integer id){
-        service.deleteCoach(id);
-        return "Deleted";
+        return service.deleteCoach(id);
     }
     @PutMapping("/coach")
-    public Coach updateCoach(@RequestBody RequestCoach coach){
+    public Object updateCoach(@RequestBody RequestCoach coach){
         return service.updateCoach(coach);
     }
 

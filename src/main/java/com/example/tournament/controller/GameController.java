@@ -20,7 +20,7 @@ public class GameController {
     }
 
     @GetMapping("/game/{id}")
-    public ResponseGame find(@PathVariable Integer id){
+    public Object find(@PathVariable Integer id){
         return service.getGame(id);
     }
     @GetMapping("/game/list")
@@ -33,11 +33,10 @@ public class GameController {
     }
     @DeleteMapping("/game/{id}")
     public String delete(@PathVariable Integer id){
-        service.deleteGame(id);
-        return "Deleted";
+        return service.deleteGame(id);
     }
     @PutMapping("/game")
-    public Game update(@RequestBody RequestGame reqGame){
+    public Object update(@RequestBody RequestGame reqGame){
         return service.updateGame(reqGame);
     }
 

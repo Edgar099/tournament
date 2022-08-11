@@ -11,7 +11,7 @@ public class Stat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stat_id")
     private Integer statId;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
     private Player playerId;
     @ManyToOne(fetch = FetchType.LAZY)

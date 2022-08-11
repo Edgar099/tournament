@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class GameService {
@@ -22,25 +23,41 @@ public class GameService {
         this.mapper = mapper;
     }
 
-    public ResponseGame getGame(Integer id){
-        return mapper.toDto(gameRepo.findById(id).get());
+    public Object getGame(Integer id){
+        try{
+            return mapper.toDto(gameRepo.findById(id).get());
+        }
+        catch(NoSuchElementException ex){
+            return String.format("Can't find game with such id: %d",id);
+        }
+
     }
 
     public Game saveGame(RequestGame reqGame){
         Game game = mapper.toGame(reqGame);
         return gameRepo.save(game);
     }
-    public void deleteGame(Integer id){
-        gameRepo.deleteById(id);
+    public String deleteGame(Integer id){
+        try{
+            gameRepo.deleteById(id);
+            return String.format("Game with id %d deleted", id);
+        }
+        catch (RuntimeException ex){
+            return String.format("Can't find game with such id: %d",id);
+        }
+
     }
-    public Game updateGame(RequestGame reqGame){
-        if (gameRepo.existsById(Integer.parseInt(reqGame.getGameId()))) {
-            Game game = gameRepo.findById(Integer.parseInt(reqGame.getGameId())).get();
+    public Object updateGame(RequestGame reqGame){
+        try {
+            Game game = gameRepo.findById(Integer.parseInt(reqGame.getGameId()))
+                    .orElseThrow(NoSuchElementException::new);
             Game game1 = mapper.toGame(reqGame);
             gameRepo.save(game1);
             return game;
         }
-        return null;
+        catch (NoSuchElementException ex){
+            return String.format("Can't find game with such id: %s",reqGame.getGameId());
+        }
     }
     public List<ResponseGame> listGame(){
         List<Game> listGame =  gameRepo.findAll();

@@ -9,9 +9,14 @@ public class RequestPlayer {
     private String height;
     private String weight;
     private String positionOnCourt;
-    private String numOfGames;
 
-    public RequestPlayer(String teamId, String firstName, String lastName, String age, String height, String weight, String positionOnCourt, String numOfGames) {
+    public RequestPlayer(String teamId,
+                         String firstName,
+                         String lastName,
+                         String age,
+                         String height,
+                         String weight,
+                         String positionOnCourt) {
         this.teamId = teamId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,10 +24,16 @@ public class RequestPlayer {
         this.height = height;
         this.weight = weight;
         this.positionOnCourt = positionOnCourt;
-        this.numOfGames = numOfGames;
     }
 
-    public RequestPlayer(String playerId, String teamId, String firstName, String lastName, String age, String height, String weight, String positionOnCourt, String numOfGames) {
+    public RequestPlayer(String playerId,
+                         String teamId,
+                         String firstName,
+                         String lastName,
+                         String age,
+                         String height,
+                         String weight,
+                         String positionOnCourt) {
         this.playerId = playerId;
         this.teamId = teamId;
         this.firstName = firstName;
@@ -31,7 +42,6 @@ public class RequestPlayer {
         this.height = height;
         this.weight = weight;
         this.positionOnCourt = positionOnCourt;
-        this.numOfGames = numOfGames;
     }
 
     public RequestPlayer() {
@@ -101,13 +111,6 @@ public class RequestPlayer {
         this.positionOnCourt = positionOnCourt;
     }
 
-    public String getNumOfGames() {
-        return numOfGames;
-    }
-
-    public void setNumOfGames(String numOfGames) {
-        this.numOfGames = numOfGames;
-    }
 
     @Override
     public String toString() {
@@ -120,7 +123,6 @@ public class RequestPlayer {
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
                 ", positionOnCourt='" + positionOnCourt + '\'' +
-                ", numOfGames='" + numOfGames + '\'' +
                 '}';
     }
 }

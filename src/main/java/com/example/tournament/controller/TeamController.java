@@ -24,7 +24,7 @@ public class TeamController {
     }
 
     @GetMapping("/team/{id}")
-    public ResponseTeam findTeam(@PathVariable Integer id) {
+    public Object findTeam(@PathVariable Integer id) {
         return service.getTeam(id);
     }
 
@@ -39,12 +39,11 @@ public class TeamController {
     }
     @DeleteMapping( "/team/{id}")
     public String delete(@PathVariable Integer id) {
-        service.deleteTeam(id);
-        return "This Team deleted";
+        return service.deleteTeam(id);
     }
 
     @PutMapping("/team")
-    public Team update(@RequestBody  RequestTeam  reqTeam){
+    public Object update(@RequestBody  RequestTeam  reqTeam){
         return service.updateTeam(reqTeam);
     }
 }

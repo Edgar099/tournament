@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PlayerService {
@@ -21,25 +22,40 @@ public class PlayerService {
         this.mapper = mapper;
     }
 
-    public ResponsePlayer getPlayer(Integer id){
-        return mapper.toDto(playerRepo.findById(id).get());
+    public Object getPlayer(Integer id){
+        try{
+            return mapper.toDto(playerRepo.findById(id).get());
+        }
+        catch(NoSuchElementException ex){
+            return String.format("Can't find player with such id: %d ", id);
+        }
+
     }
     public Player savePlayer(RequestPlayer reqPlayer){
         Player player = mapper.toPlayer(reqPlayer);
         return playerRepo.save(player);
     }
 
-    public void deletePlayer(Integer id){
-        playerRepo.deleteById(id);
+    public String deletePlayer(Integer id){
+        try{
+            playerRepo.deleteById(id);
+            return String.format("Player with id %d deleted", id);
+        }
+        catch (RuntimeException ex){
+            return String.format("Can't find player with such id: %d ", id);
+        }
     }
-    public Player updatePlayer(RequestPlayer reqPlayer){
-        if(playerRepo.existsById(Integer.parseInt(reqPlayer.getPlayerId()))){
+    public Object updatePlayer(RequestPlayer reqPlayer){
+        try{
             Player player = playerRepo.findById(Integer.parseInt(reqPlayer.getPlayerId())).get();
             Player player1 = mapper.toPlayer(reqPlayer);
             playerRepo.save(player1);
             return player;
         }
-        return null;
+        catch (RuntimeException ex){
+            return String.format("Can't find player with such id: %s ", reqPlayer.getPlayerId());
+        }
+
     }
     public List<ResponsePlayer> listPlayer(){
         List<Player> listPlayer =  playerRepo.findAll();

@@ -1,4 +1,5 @@
 package com.example.tournament.service;
+import com.example.tournament.domain.Coach;
 import com.example.tournament.domain.Team;
 import com.example.tournament.dto.Mapper;
 import com.example.tournament.dto.RequestTeam;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TeamService {
@@ -23,27 +25,40 @@ public class TeamService {
         return teamRepo;
     }
 
-    public ResponseTeam getTeam(Integer id){
-        Team team = teamRepo.findById(id).get();
-        return mapper.toDto(team);
+    public Object getTeam(Integer id) {
+        try{
+            return mapper.toDto(teamRepo.findById(id).get());
+        }
+        catch (NoSuchElementException ex){
+            return String.format("Team doesn't exist with such id: %d",id);
+        }
+
     }
     public Team saveTeam(RequestTeam reqTeam){
         Team team = mapper.toTeam(reqTeam);
         return teamRepo.save(team);
     }
-    public void  deleteTeam(Integer id){
-        teamRepo.deleteById(id);
-    }
-    public Team updateTeam(RequestTeam reqTeam){
-        if(teamRepo.existsById(Integer.parseInt(reqTeam.getTeamId()))){
-            Team team1 = teamRepo.findById(Integer.parseInt(reqTeam.getTeamId())).get();
-            Team team = mapper.toTeam(reqTeam);
-            teamRepo.save(team);
-            return team1;
-
+    public String  deleteTeam(Integer id){
+        try{
+            teamRepo.deleteById(id);
+            return String.format("Team with id = %d is deleted",id);
 
         }
-        return null;
+        catch (RuntimeException ex){
+            return String.format("Team doesn't exists with such id: %d ", id);
+        }
+    }
+    public Object updateTeam(RequestTeam reqTeam){
+        try{
+            Team team = mapper.toTeam(reqTeam);
+            Team team1 = teamRepo.findById(Integer.parseInt(reqTeam.getTeamId())).
+                    orElseThrow(()->new NoSuchElementException("No such elements"));
+            teamRepo.save(team);
+            return team1;
+        }
+        catch (NoSuchElementException ex){
+            return String.format("Team doesn't exists with such id: %s ", reqTeam.getTeamId());
+        }
     }
     public List<ResponseTeam> listTeam(){
         List<Team> listT =  teamRepo.findAll();

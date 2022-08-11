@@ -8,7 +8,10 @@ public class Mapper {
     TeamRepository teamRepo;
     GameRepository gameRepo;
     PlayerRepository playerRepo;
-    public Mapper(CoachRepository coachRepo, TeamRepository teamRepo, GameRepository gameRepo, PlayerRepository playerRepo) {
+    public Mapper(CoachRepository coachRepo,
+                  TeamRepository teamRepo,
+                  GameRepository gameRepo,
+                  PlayerRepository playerRepo) {
         this.coachRepo = coachRepo;
         this.teamRepo = teamRepo;
         this.gameRepo = gameRepo;
@@ -65,7 +68,7 @@ public class Mapper {
         if(reqcoach.getCoachId()==null)
             return new Coach(reqcoach.getFirstName(), reqcoach.getLastName());
         else
-            return new Coach(Integer.parseInt(reqcoach.getCoachId()), reqcoach.getFirstName(), reqcoach.getLastName());
+            return new Coach(Integer.parseInt(reqcoach.getCoachId()),reqcoach.getFirstName(), reqcoach.getLastName());
     }
     public Team toTeam(RequestTeam reqTeam){
         Coach coach = coachRepo.findById(Integer.parseInt(reqTeam.coachId)).get();

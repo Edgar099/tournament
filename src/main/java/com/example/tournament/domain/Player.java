@@ -16,7 +16,7 @@ public class Player {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
-    private String lastname;
+    private String lastName;
     @Column(name = "age")
     private Integer age;
     @Column(name = "height")
@@ -27,21 +27,21 @@ public class Player {
     private Integer positionOnCourt;
 
 
-    public Player(Team teamId, String firstName, String lastname,  Integer height, Integer weight, Integer age, Integer positionOnCourt) {
+    public Player(Team teamId, String firstName, String lastName,  Integer height, Integer weight, Integer age, Integer positionOnCourt) {
         this.teamId = teamId;
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.age = age;
         this.height = height;
         this.weight = weight;
         this.positionOnCourt = positionOnCourt;
     }
 
-    public Player(Integer playerId, Team teamId, String firstName, String lastname,  Integer height, Integer weight,Integer age, Integer positionOnCourt) {
+    public Player(Integer playerId, Team teamId, String firstName, String lastName,  Integer height, Integer weight,Integer age, Integer positionOnCourt) {
         this.playerId = playerId;
         this.teamId = teamId;
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.age = age;
         this.height = height;
         this.weight = weight;
@@ -74,10 +74,10 @@ public class Player {
     }
 
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
 
     public Integer getAge() {
@@ -115,7 +115,7 @@ public class Player {
                 "playerId=" + playerId +
                 ", teamId=" + teamId +
                 ", firstName='" + firstName + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", height=" + height +
                 ", weight=" + weight +
